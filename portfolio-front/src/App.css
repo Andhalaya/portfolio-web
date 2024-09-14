@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap');
+
+.App{
+  font-family: "Epilogue", sans-serif;
+  font-size: 16px;
+}
+
+.icon{
+color: #ec7424;
+font-size: 20px;
+cursor: pointer;
+}
+
+
+/* -----------------HEADER----------------- */
+
+.header{
+  display: flex;
+  padding: 25px;
+  height: 40px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2{
+  font-size: 30px;
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  gap: 70px;
+  width: 500px;
+  background-color: rgba(255, 255, 255, 0.158);
+  padding: 10px 40px;
+  border-radius: 30px;
+  box-shadow: 3px 5px 4px 0 rgba(0, 0, 0, 0.25) ;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.nav div:hover{
+text-decoration: underline;
+cursor: pointer;
+}
+
+.nav-section{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.contact-btn{
+background-color: #ec7424;
+padding: 10px 20px;
+border-radius: 30px;
+box-shadow: 3px 5px 4px 0 rgba(0, 0, 0, 0.25) ;
+}
+
+/* -----------------MAIN----------------- */
+.main{
+  display: flex;
+}
+
+.home{
+  
+  padding: 40px 100px;
+}
+
+.content{
+  width: 50%;
+  padding-left: 20px;
+}
+
+/* -----------------SIDEBAR----------------- */
+
+.sideBar{
+padding-top: 20px;
+width: 20%;
+display: flex;
+flex-direction: column;
+gap: 20px;
+align-items: center;
+}
+
+.user-img{
+  width: 90px;
+  height: 90px;
+  border-radius: 50px;
+  background-color: #ec7424;
+  box-shadow: 3px 5px 4px 0 rgba(0, 0, 0, 0.25) ;
+}
+
+.user-info{
+  text-align: center;
+  max-width: 200px;
+}
+
+.link{
+  display: flex;
+  gap: 15px;
+}
+
+.links{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ----------FOOTER------------- */
+
+.footer{
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  color: black;
+  padding: 5px 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.admin{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: rgb(236, 116, 36);
+}
+
+.dropdown-menu {
+  background-color: white;
+  padding: 10px;
+  
+}
+
+textarea {
+  width: 100%;
+  height: 500px;
+  padding: 20px;
+  border: 1px solid #dddddd46;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #1f212a;
+  color: aliceblue;
+}
+
+.home h1 {
+  color: #2c3e50;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.home h2 {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.home p {
+  line-height: 1.6;
+  color: #ffffff;
+  font-weight: 300;
+}
+
+
+.home ul {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.home ul li {
+  margin-bottom: 10px;
+}
+
+.home pre, .home code {
+  background-color: #1b1b1b;
+  padding: 10px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+.home a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.home a:hover {
+  text-decoration: underline;
+}

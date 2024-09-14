@@ -1,0 +1,21 @@
+:root{
+  background-color: #1f212a;
+  color: white;
+}
+
+body, div, h1, h2{
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+a{
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.inline{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
