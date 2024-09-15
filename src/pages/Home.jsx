@@ -56,10 +56,10 @@ function Home() {
     return (
         <div className='home'>
             <div className='inline'>
-                {currentUser && !isEditing && (
-                    <Icons.MdOutlineModeEdit className='icon' onClick={handleEditClick} />
-                )}
                 <h2>About me</h2>
+                {currentUser && !isEditing && (
+                    <Icons.MdOutlineModeEdit className='icon edit' onClick={handleEditClick} />
+                )}
             </div>
             {isEditing ? (
                 <div>
