@@ -82,9 +82,6 @@ function Portfolio() {
   return (
     <div>
       <h2>Portfolio Items</h2>
-      <button onClick={() => setCreating(!creating)}>
-            {creating ? 'Cancel' : 'Add New Document'}
-      </button>
       {currentUser && (
         <>
           <button onClick={() => setCreating(!creating)}>
