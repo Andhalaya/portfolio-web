@@ -8,6 +8,7 @@ import Cv from "./pages/Cv";
 import CourseWork from "./pages/CourseWork";
 import BlogPosts from "./pages/BlogPosts";
 import Portfolio from "./pages/Portfolio";
+import ProjectPage from "./pages/ProjectPage";
 
 const App = () => (
   <Router>
@@ -15,20 +16,11 @@ const App = () => (
       <Layout>
         <Routes>
         <Route path="/" element={<Home/>} />
-        <Route
-          path="/coursework"
-          element={
-            <CourseWork />
-          }
-        />
+        <Route path="/coursework" element={ <CourseWork />} />
         <Route path="/cv" element={ <Cv />}/>
         <Route path="/blog-posts" element={ <BlogPosts /> }/>
-        <Route
-          path="/portfolio"
-          element={
-            <Portfolio /> 
-          }
-        />
+        <Route path="/portfolio" element={ <Portfolio /> } />
+        <Route path="/portfolio/:id" element={<ProjectPage />} />
       </Routes>
       </Layout>
     </AuthProvider>
