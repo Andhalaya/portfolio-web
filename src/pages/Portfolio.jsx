@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, Timestamp } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ function Portfolio() {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const { currentUser } = useContext(AuthContext);
   const [creating, setCreating] = useState(false); // State to control form visibility
 
   useEffect(() => {
@@ -79,6 +81,8 @@ function Portfolio() {
   return (
     <div>
       <h2>Portfolio Items</h2>
+      {currentUser ? 
+      <>
       <button onClick={() => setCreating(!creating)}>
         {creating ? 'Cancel' : 'Add New Document'}
       </button>
@@ -107,6 +111,9 @@ function Portfolio() {
           </form>
         </div>
       )}
+      </> : ''
+    }
+      
       <div>
         {documents.map((doc) => (
           <div key={doc.id} style={{ borderBottom: '1px solid #ddd', marginBottom: '20px', paddingBottom: '10px' }}>
