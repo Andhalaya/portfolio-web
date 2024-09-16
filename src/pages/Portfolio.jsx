@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { db } from '../config/firebase';
+import { db, storage } from '../config/firebase';
 import { collection, getDocs, addDoc, Timestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid'; 
+import { marked } from 'marked'; 
 
 function Portfolio() {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [markdownContent, setMarkdownContent] = useState(''); 
+  const [imageFile, setImageFile] = useState(null); 
+  const [creating, setCreating] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const [creating, setCreating] = useState(false); // State to control form visibility
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -21,7 +26,6 @@ function Portfolio() {
           ...doc.data(),
         }));
         setDocuments(portfolioItems);
-        console.log(currentUser);
       } catch (error) {
         console.error("Error fetching documents: ", error);
       } finally {
@@ -44,32 +48,55 @@ function Portfolio() {
     return "Unknown Date";
   };
 
+  const handleImageUpload = async () => {
+    if (!imageFile) return '';
+
+    const storageRef = ref(storage, `images/${uuidv4()}_${imageFile.name}`);
+    await uploadBytes(storageRef, imageFile);
+    const url = await getDownloadURL(storageRef);
+    return url;
+  };
+
   const handleCreate = async () => {
-    if (!title || !description) {
+    if (!title || !markdownContent) {
       alert('Please fill out all fields.');
       return;
     }
 
     try {
+      const imageUrl = await handleImageUpload();
+
+
+      const updatedMarkdownContent = imageUrl
+        ? `${markdownContent}\n\n![Uploaded Image](${imageUrl})`
+        : markdownContent;
+
+      const htmlContent = marked(updatedMarkdownContent); 
+
       const docRef = await addDoc(collection(db, "portfolio"), {
         title,
         description,
-        timestamp: Timestamp.now(), // Add the current timestamp
+        content: updatedMarkdownContent, 
+        htmlContent, 
+        timestamp: Timestamp.now(),
       });
 
-      // Update the state with the new document
       setDocuments([
         ...documents,
         {
           id: docRef.id,
           title,
           description,
+          content: updatedMarkdownContent,
+          htmlContent,
           timestamp: Timestamp.now(),
         },
       ]);
       setTitle('');
       setDescription('');
-      setCreating(false); // Close the form
+      setMarkdownContent('');
+      setImageFile(null);
+      setCreating(false);
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -82,7 +109,7 @@ function Portfolio() {
   return (
     <div>
       <h2>Portfolio Items</h2>
-      {currentUser && (
+      {currentUser ? (
         <>
           <button onClick={() => setCreating(!creating)}>
             {creating ? 'Cancel' : 'Add New Document'}
@@ -93,19 +120,28 @@ function Portfolio() {
               <form onSubmit={(e) => { e.preventDefault(); handleCreate(); }}>
                 <div>
                   <label>Title:</label>
-                  <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
+                  <input 
+                    type="text" 
+                    value={title} 
+                    onChange={(e) => setTitle(e.target.value)} 
+                    required 
                   />
                 </div>
                 <div>
-                  <label>Description:</label>
-                  <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
+                  <label>Markdown Content:</label>
+                  <textarea 
+                    value={markdownContent} 
+                    onChange={(e) => setMarkdownContent(e.target.value)} 
+                    rows="10"
+                    required 
+                  />
+                </div>
+                <div>
+                  <label>Upload Image:</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setImageFile(e.target.files[0])}
                   />
                 </div>
                 <button type="submit">Create</button>
@@ -113,7 +149,7 @@ function Portfolio() {
             </div>
           )}
         </>
-      )}
+      ) : null}
 
       <div>
         {documents.map((doc) => (
